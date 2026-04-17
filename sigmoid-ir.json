@@ -1,0 +1,83 @@
+{
+    "resourceSpecId": "66666666-6666-4666-8666-666666666666",
+    "stableId": "main-dynamodb",
+    "displayName": "DynamoDB Table",
+    "category": "database",
+    "iconUrl": "https://cdn.sigmoid.us/icons/aws/full-size/svg/database/dynamodb.svg",
+    "resourceType": "database.dynamodb",
+    "vpcDependency": "none",
+    "status": "draft",
+    "position": { "x": 600, "y": 100 },
+    "terraform": {
+        "module": {
+            "source": "github.com/sigmoid-hq/terraform-aws-dynamodb",
+            "ref": "main"
+        }
+    },
+    "pricing": {
+        "lookups": [
+            {
+                "serviceCode": "AmazonDynamoDB",
+                "unit": "per_million",
+                "quantityProperties": ["monthly_read_requests"],
+                "quantityDefault": 0,
+                "filters": [
+                    { "field": "location", "value": "${location}" },
+                    { "field": "group", "value": "DDB-ReadUnits" },
+                    { "field": "productFamily", "defaultValue": "Amazon DynamoDB PayPerRequest Throughput", "required": false }
+                ]
+            },
+            {
+                "serviceCode": "AmazonDynamoDB",
+                "unit": "per_million",
+                "quantityProperties": ["monthly_write_requests"],
+                "quantityDefault": 0,
+                "filters": [
+                    { "field": "location", "value": "${location}" },
+                    { "field": "group", "value": "DDB-WriteUnits" },
+                    { "field": "productFamily", "defaultValue": "Amazon DynamoDB PayPerRequest Throughput", "required": false }
+                ]
+            },
+            {
+                "serviceCode": "AmazonDynamoDB",
+                "unit": "per_gb_month",
+                "quantityProperties": ["storage_gb"],
+                "quantityDefault": 0,
+                "filters": [
+                    { "field": "location", "value": "${location}" },
+                    { "field": "group", "value": "DDB-Storage" },
+                    { "field": "productFamily", "defaultValue": "Database Storage", "required": false }
+                ]
+            }
+        ],
+        "usageProfiles": {
+            "default": "medium",
+            "low": {
+                "monthly_read_requests": 2500000,
+                "monthly_write_requests": 2500000,
+                "storage_gb": 20
+            },
+            "medium": {
+                "monthly_read_requests": 50000000,
+                "monthly_write_requests": 20000000,
+                "storage_gb": 100
+            },
+            "high": {
+                "monthly_read_requests": 500000000,
+                "monthly_write_requests": 200000000,
+                "storage_gb": 1000
+            },
+            "xhigh": {
+                "monthly_read_requests": 2000000000,
+                "monthly_write_requests": 1000000000,
+                "storage_gb": 10000
+            }
+        }
+    },
+    "easy": {
+        "alias": "Database",
+        "group": "data-database",
+        "priority": 30,
+        "allowedProperties": ["billing_mode", "hash_key", "range_key", "stream_enabled"]
+    }
+}
