@@ -186,16 +186,22 @@ variable "server_side_encryption_kms_key_arn" {
   default     = null
 }
 
+variable "kms_key_arn" {
+  description = "ARN of the KMS key for server-side encryption. Empty string uses the AWS managed key"
+  type        = string
+  default     = ""
+}
+
 variable "point_in_time_recovery_enabled" {
   description = "Enable point-in-time recovery"
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "deletion_protection_enabled" {
   description = "Enable deletion protection"
   type        = bool
-  default     = false
+  default     = true
 }
 
 # ====================================

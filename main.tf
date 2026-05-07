@@ -67,7 +67,7 @@ resource "aws_dynamodb_table" "main" {
   # Server-Side Encryption
   server_side_encryption {
     enabled     = var.server_side_encryption_enabled
-    kms_key_arn = var.server_side_encryption_kms_key_arn
+    kms_key_arn = var.kms_key_arn != "" ? var.kms_key_arn : var.server_side_encryption_kms_key_arn
   }
 
   # Point-in-Time Recovery
@@ -90,12 +90,9 @@ resource "aws_dynamodb_table" "main" {
     ]
   }
 
-  tags = merge(
-    {
-      Name = local.table_name
-    },
-    var.tags
-  )
+  tags = merge(local.resolved_tags, {
+    Name = local.table_name
+  })
 }
 
 ### --------------------------------------------------
