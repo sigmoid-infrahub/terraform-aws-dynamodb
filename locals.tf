@@ -1,5 +1,5 @@
 locals {
-  table_name = "${var.prefix}-${var.table_name}"
+  table_name = var.prefix != "" ? "${var.prefix}-${var.table_name}" : var.table_name
 
   sigmoid_tags = merge(
     var.sigmoid_environment != "" ? { "sigmoid:environment" = var.sigmoid_environment } : {},
