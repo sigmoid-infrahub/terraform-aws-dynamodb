@@ -75,8 +75,8 @@
         }
     },
     "easy": {
-        "alias": "Database",
-        "group": "data-database",
+        "alias": "NoSQL Database",
+        "group": "data-nosql",
         "priority": 30,
         "allowedProperties": ["billing_mode", "hash_key", "range_key", "stream_enabled"]
     }
